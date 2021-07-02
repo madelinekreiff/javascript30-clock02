@@ -61,14 +61,49 @@
       height: 6px;
       position: absolute;
       top: 50%;
+      transform: rotate(90deg);
+      transform-origin: 100%;
       width: 50%;
     }
-
   </style>
 
   <script>
+    const hourHand = document.querySelector(".hour-hand");
+    const minuteHand = document.querySelector(".min-hand");
+    const secondHand = document.querySelector(".second-hand");
 
+    const getTime = function() {
+      const currentTime = new Date();
+      const hoursMilitary = currentTime.getHours();
+      if (hoursMilitary > 12) {
+        var hours = hoursMilitary - 12;
+      } else if (hoursMilitary === 0) {
+        var hours = 12;
+      } else {
+        var hours = hoursMilitary;
+      }
+      const minutes = currentTime.getMinutes();
+      const seconds = currentTime.getSeconds();
 
+      const hoursDeg = (hours * 30) + 90;
+      const minutesDeg = (minutes * 6) + 90;
+      const secondsDeg = (seconds * 6) + 90;
+
+      changeClock(hoursDeg, minutesDeg, secondsDeg);
+    };
+
+    const changeClock = function (hoursDeg, minutesDeg, secondsDeg) {
+      hourHand.style.transform = `rotate(${hoursDeg}deg)`;
+      minuteHand.style.transform = `rotate(${minutesDeg}deg)`;
+      secondHand.style.transform = `rotate(${secondsDeg}deg)`;
+    };
+
+    const continueTime = function () {
+      getTime();
+    };
+    
+    getTime();
+    setInterval(continueTime, 1000);
   </script>
 </body>
 </html>
